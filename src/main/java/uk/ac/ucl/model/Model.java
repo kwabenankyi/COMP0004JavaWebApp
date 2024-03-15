@@ -9,14 +9,25 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import javax.xml.crypto.Data;
+
 public class Model
 {
+  private DataFrame dataFrame;
+  private ArrayList<String> patientNames;
   // The example code in this class should be replaced by your Model class code.
   // The data should be stored in a suitable data structure.
-
-  public List<String> getPatientNames()
-  {
-    return readFile("data/patients100.csv");
+  public List<String> getPatientNames() {
+    DataLoader dataLoader = new DataLoader("data/patients100.csv");
+    DataFrame dataFrame = dataLoader.getFrame();
+    ArrayList<String> firstnames = dataFrame.getColumnAsList("FIRST");
+    ArrayList<String> lastnames = dataFrame.getColumnAsList("LAST");
+    ArrayList<String> patientNames = new ArrayList<>();
+    for (int i = 0; i < firstnames.size(); i++) {
+      patientNames.add(firstnames.get(i) + " " + lastnames.get(i));
+    }
+    this.patientNames = patientNames;
+    return patientNames;
   }
 
   // This method illustrates how to read csv data from a file.
@@ -45,6 +56,18 @@ public class Model
   // the data and return a list of matching items.
   public List<String> searchFor(String keyword)
   {
-    return List.of("Search keyword is: "+ keyword, "result1", "result2", "result3");
+    ArrayList<String> searchResults = new ArrayList<>();
+    if (this.patientNames == null) {
+      this.getPatientNames();
+    }
+    for (String name : this.patientNames) {
+      if ((name.toLowerCase()).contains(keyword)) {
+        searchResults.add(name);
+      }
+    }
+    if (searchResults.isEmpty()) {
+      searchResults.add("No results found");
+    }
+    return searchResults;
   }
 }

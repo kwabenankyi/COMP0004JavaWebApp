@@ -9,7 +9,7 @@
 <body>
 <jsp:include page="/header.jsp"/>
 <div class="main">
-  <h1>Search Result</h1>
+  <h1>Search Result for "<%=(String) request.getAttribute("searchstring")%>"</h1>
   <%
     List<String> patients = (List<String>) request.getAttribute("result");
     if (patients.size() !=0)
