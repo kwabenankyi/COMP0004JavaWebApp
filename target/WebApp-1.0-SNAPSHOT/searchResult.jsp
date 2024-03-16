@@ -19,6 +19,7 @@
       <%
         for (String patient : patients)
         {
+          String href = "patientProfile.html/" + patient;
       %>
       <li><%=patient%></li>
      <% }

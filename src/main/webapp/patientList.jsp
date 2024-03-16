@@ -12,10 +12,13 @@
   <h2>Patients:</h2>
   <ul>
     <%
+      int count = 0;
       List<String> patients = (List<String>) request.getAttribute("patientNames");
+      List<String> IDs = (List<String>) request.getAttribute("patientIDs");
       for (String patient : patients)
       {
-        String href = "dummypage.html";
+        String href = "patientProfile.html" + "?ID=" + IDs.get(count);
+        count++;
     %>
     <li><a href="<%=href%>"><%=patient%></a>
     </li>
