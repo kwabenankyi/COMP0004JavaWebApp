@@ -1,14 +1,11 @@
 package uk.ac.ucl.model;
 
-import java.io.Reader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 import javax.xml.crypto.Data;
 
@@ -19,6 +16,7 @@ public class Model
   private void initialiseDF() {
     DataLoader dataLoader = new DataLoader("data/patients100.csv");
     this.dataFrame = dataLoader.getFrame();
+    this.setPatientNames();
   }
   // The example code in this class should be replaced by your Model class code.
   // The data should be stored in a suitable data structure.
@@ -32,13 +30,10 @@ public class Model
     for (int i = 0; i < firstnames.size(); i++) {
       patientNames.add(lastnames.get(i) + ", " + firstnames.get(i));
     }
-    patientNames.sort(String.CASE_INSENSITIVE_ORDER);
     this.patientNames = patientNames;
   }
   public List<String> getPatientNames() {
-    if (this.patientNames == null) {
-      this.setPatientNames();
-    }
+    this.setPatientNames();
     return patientNames;
   }
   private int searchInColumn(String columnName, String keyword) {
@@ -81,13 +76,13 @@ public class Model
       if (this.dataFrame == null) {
         this.initialiseDF();
       }
-      String[] names = name.split(" ");
-      int rownum = searchInColumn("FIRST", names[0]);
-      if (rownum == -1) {
+      String[] names = name.split(", ");
+      int row = searchInColumn("FIRST", names[0]);
+      if (row == -1) {
         return null;
       }
-      if (this.dataFrame.getValue("LAST", rownum).equals(names[1])) {
-        return this.dataFrame.getValue("ID", rownum);
+      if (this.dataFrame.getValue("LAST", row).equals(names[1])) {
+        return this.dataFrame.getValue("ID", row);
       }
       return null;
   }
@@ -114,5 +109,136 @@ public class Model
       searchResults.add("No results found");
     }
     return searchResults;
+  }
+  public List<String> getAddresses() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    return this.dataFrame.getColumnAsList("ADDRESS");
+  }
+  public List<String> getCities() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    return this.dataFrame.getColumnAsList("CITY");
+  }
+
+  public HashMap<String,ArrayList<String>> splitPatientsByCity() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    HashMap<String,ArrayList<String>> cityPatients = new HashMap<>();
+    ArrayList<String> newCity;
+    ArrayList<String> cities = this.dataFrame.getColumnAsList("CITY");
+    ArrayList<String> patientIDs = this.dataFrame.getColumnAsList("ID");
+    for (int i = 0; i < cities.size(); i++) {
+      try {
+        cityPatients.get(cities.get(i)).add(patientIDs.get(i));
+      } catch (NullPointerException e) {
+        newCity = new ArrayList<>();
+        newCity.add(patientIDs.get(i));
+        cityPatients.put(cities.get(i), newCity);
+      }
+    }
+    return cityPatients;
+  }
+  public HashMap<String, String> getIDsToNames() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    this.patientNames.clear();
+    this.setPatientNames();
+    HashMap<String, String> idsToName = new HashMap<>();
+    for (int i = 0; i < this.patientNames.size(); i++) {
+      idsToName.put(this.dataFrame.getValue("ID", i), this.patientNames.get(i));
+    }
+    return idsToName;
+  }
+  public ArrayList<String> getDeceased() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    ArrayList<String> deceased = new ArrayList<>();
+    for (int i = 0; i < this.dataFrame.getRowCount(); i++) {
+      if (!(this.dataFrame.getValue("DEATHDATE", i).isEmpty())) {
+        deceased.add(this.dataFrame.getValue("ID", i));
+      }
+    }
+    return deceased;
+  }
+  public void sort(String columnName) {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    this.dataFrame.sortAllByOneColumn(columnName);
+  }
+  public int calcAge(String dob) {
+    return Period.between(LocalDate.parse(dob), LocalDate.now()).getYears();
+  }
+  public ArrayList<String> getAgeGroups() {
+    ArrayList<String> ageGroups = new ArrayList<>();
+    ageGroups.add("0-17");
+    ageGroups.add("18-25");
+    ageGroups.add("26-40");
+    ageGroups.add("41-60");
+    ageGroups.add("61-80");
+    ageGroups.add("81+");
+    ageGroups.add("Deceased");
+    return ageGroups;
+  }
+  public HashMap<String,ArrayList<String>> getIDsToAges() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    HashMap<String,ArrayList<String>> ages = new HashMap<>();
+    ages.put("0-17", new ArrayList<>());
+    ages.put("18-25", new ArrayList<>());
+    ages.put("26-40", new ArrayList<>());
+    ages.put("41-60", new ArrayList<>());
+    ages.put("61-80", new ArrayList<>());
+    ages.put("81+", new ArrayList<>());
+    ages.put("Deceased", this.getDeceased());
+    ArrayList<String> alive = new ArrayList<>(this.getPatientIDs());
+    alive.removeAll(ages.get("Deceased")); // list of ids of patients who are alive
+    int rownum;
+    for (String patientID : alive) {
+      rownum = searchInColumn("ID", patientID);
+      switch (calcAge(this.dataFrame.getValue("BIRTHDATE", rownum))) {
+        case 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17:
+          ages.get("0-17").add(patientID);
+          break;
+        case 18,19,20,21,22,23,24,25:
+          ages.get("18-25").add(patientID);
+          break;
+        case 26,27,28,29,30,31,32,33,34,35,36,37,38,39,40:
+          ages.get("26-40").add(patientID);
+          break;
+        case 41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60:
+          ages.get("41-60").add(patientID);
+          break;
+        case 61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80:
+          ages.get("61-80").add(patientID);
+          break;
+        default:
+          ages.get("81+").add(patientID);
+      }
+    }
+    return ages;
+  }
+  public HashMap<String,String> getIDsToAddresses() {
+      if (this.dataFrame == null) {
+        this.initialiseDF();
+      }
+      HashMap<String,String> addresses = new HashMap<>();
+      for (int i = 0; i < this.dataFrame.getRowCount(); i++) {
+        addresses.put(this.dataFrame.getValue("ID", i), this.dataFrame.getValue("ADDRESS", i) + ", " + this.dataFrame.getValue("CITY", i) + ", " + this.dataFrame.getValue("STATE", i) + ", " + this.dataFrame.getValue("ZIP", i));
+      }
+      return addresses;
+  }
+  public HashMap<String,String> getIDsToDOB() {
+    if (this.dataFrame == null) {
+      this.initialiseDF();
+    }
+    return this.dataFrame.mapOneColToAnother("ID", "BIRTHDATE");
   }
 }

@@ -17,7 +17,7 @@
       List<String> IDs = (List<String>) request.getAttribute("patientIDs");
       for (String patient : patients)
       {
-        String href = "patientProfile.html" + "?ID=" + IDs.get(count);
+        String href = "patientProfile.html?ID=" + IDs.get(count);
         count++;
     %>
     <li><a href="<%=href%>"><%=patient%></a>
