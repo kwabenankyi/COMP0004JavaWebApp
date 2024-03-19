@@ -9,36 +9,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <jsp:include page="header.jsp"/>
     <title>Patient Data App: Location info</title>
 </head>
 <body>
-<h1>Location info</h1>
-<% {
-    HashMap<String, ArrayList<String>> cityPatients = (HashMap<String, ArrayList<String>>) request.getAttribute("cityPatients");
-    HashMap<String, String> patientNames = (HashMap<String, String>) request.getAttribute("idNames");
-    ArrayList<String> cities = (ArrayList<String>) request.getAttribute("cities");
-    HashMap<String,String> patientAddresses = (HashMap<String, String>) request.getAttribute("idAddresses");
-    String name, address;
-    String state = ", MA";
-    for (String city : cities) {
-        out.println("<h2>" + city + state + "</h2>");
-        out.println("<table border='1'>");
-        out.println("<tr>");
-        out.println("<th>Patient Name</th>");
-        out.println("<th>Patient Address</th>");
-        out.println("</tr>");
-        for (String patientID : cityPatients.get(city)) {
-            name = patientNames.get(patientID);
-            address = patientAddresses.get(patientID);
-            out.println("<tr>");
-            out.println("<td><a href=patientProfile.html?ID=" + patientID + ">" + name + "</a></td>");
-            out.println("<td>" + address + "</td>");
-            out.println("</tr>");
-        }
-        out.println("</table>");
-
-    }
-} %>
-<jsp:include page="footer.jsp"/>
+    <section class='main'>
+        <jsp:include page="topnav.jsp"/>
+        <div class="content">
+            <% {
+                HashMap<String, ArrayList<String>> cityPatients = (HashMap<String, ArrayList<String>>) request.getAttribute("cityPatients");
+                HashMap<String, String> patientNames = (HashMap<String, String>) request.getAttribute("idNames");
+                ArrayList<String> cities = (ArrayList<String>) request.getAttribute("cities");
+                HashMap<String,String> patientAddresses = (HashMap<String, String>) request.getAttribute("idAddresses");
+                String state = ", MA";
+                for (String city : cities) {
+                    out.println("<h2>" + city + state + "</h2>");
+                    out.println("<table border='1'>");
+                    out.println("<tr>");
+                    out.println("<th>Patient Name</th>");
+                    out.println("<th>Patient Address</th>");
+                    out.println("</tr>");
+                    for (String patientID : cityPatients.get(city)) {
+                        out.println("<tr>");
+                        out.println("<td><a href=patientProfile.html?ID=" + patientID + ">" + patientNames.get(patientID) + "</a></td>");
+                        out.println("<td>" + patientAddresses.get(patientID) + "</td>");
+                        out.println("</tr>");
+                    }
+                    out.println("</table>");
+                }
+            } %>
+        </div>
+    </section>
+        <jsp:include page="footer.jsp"/>
 </body>
 </html>
