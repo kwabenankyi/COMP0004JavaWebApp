@@ -19,8 +19,7 @@ public class DataLoader {
         this.columnNames = new ArrayList<>();
         this.frame = this.readFile();
     }
-    private DataFrame readFile()
-    {
+    private DataFrame readFile() {
         DataFrame df = new DataFrame();
         try (Reader reader = new FileReader(fileName);
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
@@ -36,7 +35,6 @@ public class DataLoader {
                     for (int i = 0; i < columnNames.size(); i++) {
                         df.addValue(columnNames.get(i), csvRecord.get(i));
                     }
-                    // The first row of the file contains the column headers, so is not actual data.
                 }
             }
         } catch (IOException e) {

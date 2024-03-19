@@ -11,39 +11,42 @@
     <title>Patient Data App: General stats</title>
     <jsp:include page="header.jsp"/>
 </head>
-<body>
-    <section class="main">
+<body class="main">
+    <section>
         <jsp:include page="topnav.jsp"/>
         <div class="content">
+            <h1 style="text-align: center">Miscellaneous stats</h1>
             <div class="overview-boxes">
                 <div class="box">
                     <i class="ic--round-people"></i>
-                    <div class="title">Total patients</div>
-                    <div class="number"><%= request.getAttribute("numPatients") %></div>
+                    <div class="title">Total patients: </div>
+                    <div class="number"> <%= request.getAttribute("numPatients") %></div>
                 </div>
                 <div class="box">
                     <i class="bx bx-male"></i>
-                    <div class="title">Percentage male (%)</div>
-                    <div class="number"><%= request.getAttribute("percentOfMales") %></div>
+                    <div class="title">Percentage male (%):</div>
+                    <div class="number"> <%= request.getAttribute("percentOfMales") %></div>
                 </div>
                 <div class="box">
                     <i class="bx bx-female"></i>
-                    <div class="title">Percentage female (%)</div>
+                    <div class="title">Percentage female (%):</div>
                     <div class="number"><%= request.getAttribute("percentOfFemales") %></div>
                 </div>
+            </div>
+            <div class="overview-boxes">
                 <div class="box">
                     <i class="bx bx-car"></i>
-                    <div class="title">Percentage drivers (%)</div>
+                    <div class="title">Percentage drivers (%):</div>
                     <div class="number"><%= request.getAttribute("percentOfDrivers") %></div>
                 </div>
                 <div class="box">
                     <i class="bx bx-calendar-week"></i>
-                    <div class="title">Average age</div>
+                    <div class="title">Average age:</div>
                     <div class="number"><%= request.getAttribute("averageAge") %></div>
                 </div>
                 <div class="box">
                     <i class="bx bx-world"></i>
-                    <div class="title">Ethnicities represented</div>
+                    <div class="title">Ethnicities represented:</div>
                     <div class="number"><%= request.getAttribute("numEthnicities") %></div>
                 </div>
             </div>

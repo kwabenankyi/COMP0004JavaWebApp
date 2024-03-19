@@ -12,6 +12,7 @@
   <jsp:include page="/topnav.jsp"/>
   <div class="content">
     <h1>Search Result for "<%=(String) request.getAttribute("searchstring")%>"</h1>
+    <br/>
     <%
       List<String> results = (List<String>) request.getAttribute("result");
       List<String> resultsid = (List<String>) request.getAttribute("resultids");
@@ -31,7 +32,7 @@
       <% }
       } else
       {%>
-      <p>Nothing found</p>
+      <p>No results found.</p>
       <%}%>
     </ul>
   </div>

@@ -11,8 +11,8 @@
     <title>Patient Data App: General stats</title>
     <jsp:include page="header.jsp"/>
 </head>
-<body>
-    <section class="main">
+<body class="main">
+    <section>
         <jsp:include page="topnav.jsp"/>
         <div class="content">
             <h1 style="text-align: center">Miscellaneous stats</h1>

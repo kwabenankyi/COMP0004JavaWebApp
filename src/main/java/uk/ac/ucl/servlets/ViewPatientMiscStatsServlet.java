@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class ViewPatientMiscStatsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Model model = ModelFactory.getModel();
-        model.sort("LAST");
         int numPatients = model.getNumPatients();
         long malesPercent = Math.round((double) model.getNumOfMales() / numPatients * 100);
         long driversPercent = Math.round((double) model.getNumOfDrivers() / numPatients * 100);
@@ -29,6 +28,7 @@ public class ViewPatientMiscStatsServlet extends HttpServlet {
         request.setAttribute("percentOfDrivers", driversPercent);
         request.setAttribute("averageAge",model.getAverageAge());
         request.setAttribute("numEthnicities",model.getNumEthnicities());
+
         ServletContext context = getServletContext();
         RequestDispatcher dispatch = context.getRequestDispatcher("/statsMisc.jsp");
         dispatch.forward(request, response);

@@ -14,17 +14,17 @@
                         <i class='bx bx-map-pin'></i>
                         <div class="box-topic">View stats by location</div>
                     </a>
-                </div>
+                </div><br/>
                 <div class="box">
                     <a href="statsAge.html">
                         <i class='bx bx-calendar-check'></i>
                         <div class="box-topic">View stats by age</div>
                     </a>
-                </div>
+                </div><br/>
                 <div class="box">
                     <a href="statsMisc.html">
                         <i class='bx bx-stats'></i>
-                        <div class="box-topic">View miscellaneous stats</div>
+                        <div class="box-topic">View general stats</div>
                     </a>
                 </div>
             </div>

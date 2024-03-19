@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.HashMap"%>
 
 <html>
 <head>
@@ -17,7 +16,7 @@
     <section class="main">
         <jsp:include page="/topnav.jsp"/>
         <div class="content">
-            <h1>View patient profile</h1>
+            <h1>View patient profile</h1><br/>
             <p><b>Patient ID:</b> <%=(String) request.getAttribute("ID")%></p>
             <p><b>Patient Name:</b> <%=(String) request.getAttribute("PREFIX")%> <%=(String) request.getAttribute("FIRST")%> <%=(String) request.getAttribute("LAST")%> <%=(String) request.getAttribute("SUFFIX")%></p>
             <p><b>Gender:</b> <%=(String) request.getAttribute("GENDER")%></p>
@@ -37,7 +36,7 @@
             <% } %>
 
             <% if (!((String) request.getAttribute("PASSPORT")).equals("")) { %>
-            <p><b>Passport:</b> <%= request.getAttribute("PASSPORT") %></p>
+            <p><b>Passport number:</b> <%= request.getAttribute("PASSPORT") %></p>
             <% } %>
 
             <p><b>Marital status:</b> <%=(String) request.getAttribute("MARITAL")%></p>
