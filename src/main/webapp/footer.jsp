@@ -3,5 +3,4 @@
   <a href="patientList.html">View the Patient List</a> -
   <a href="statsIndex.jsp">View the Statistics</a> -
   <a href="index.jsp">Go home</a>
-  <div class="clearBoth"></div>
 </div>

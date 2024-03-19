@@ -21,7 +21,7 @@
             <div class="box-topic">View stats</div>
           </a>
         </div>
-      </div>
+      </div><br/>
     </div>
   </section>
 

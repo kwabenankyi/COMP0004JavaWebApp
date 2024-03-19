@@ -21,7 +21,6 @@ public class ViewPatientLocationServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Model model = ModelFactory.getModel();
         model.sort("CITY");
-        HashMap<String,ArrayList<String>> cityPatients = model.splitPatientsByCity();
         HashMap<String,String> idNames = model.getIDsToNames();
         HashMap<String,String> idAddresses = model.getIDsToAddresses();
         ArrayList<String> cities = new ArrayList<>(new HashSet<>(model.getCities()));

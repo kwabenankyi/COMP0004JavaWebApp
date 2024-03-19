@@ -16,9 +16,8 @@
     <section class="main">
         <jsp:include page="/topnav.jsp"/>
         <div class="content">
-            <h1>View patient profile</h1><br/>
+            <h1>View patient profile: <%=(String) request.getAttribute("PREFIX")%> <%=(String) request.getAttribute("FIRST")%> <%=(String) request.getAttribute("LAST")%> <%=(String) request.getAttribute("SUFFIX")%></h1><br/>
             <p><b>Patient ID:</b> <%=(String) request.getAttribute("ID")%></p>
-            <p><b>Patient Name:</b> <%=(String) request.getAttribute("PREFIX")%> <%=(String) request.getAttribute("FIRST")%> <%=(String) request.getAttribute("LAST")%> <%=(String) request.getAttribute("SUFFIX")%></p>
             <p><b>Gender:</b> <%=(String) request.getAttribute("GENDER")%></p>
             <p><b>Date of birth:</b> <%=(String) request.getAttribute("BIRTHDATE")%></p>
             <p><b>Place of birth:</b> <%=(String) request.getAttribute("BIRTHPLACE")%></p>
@@ -31,23 +30,22 @@
             <p><b>Ethnicity:</b> <%=(String) request.getAttribute("ETHNICITY")%></p>
             <p><b>Social security number:</b> <%=(String) request.getAttribute("SSN")%></p>
 
-            <% if (!((String) request.getAttribute("DRIVERS")).equals("")) { %>
+            <% if (!((String) request.getAttribute("DRIVERS")).isEmpty()) { %>
             <p><b>Driving licence number:</b> <%= request.getAttribute("DRIVERS") %></p>
             <% } %>
 
-            <% if (!((String) request.getAttribute("PASSPORT")).equals("")) { %>
+            <% if (!((String) request.getAttribute("PASSPORT")).isEmpty()) { %>
             <p><b>Passport number:</b> <%= request.getAttribute("PASSPORT") %></p>
             <% } %>
 
             <p><b>Marital status:</b> <%=(String) request.getAttribute("MARITAL")%></p>
 
-            <% if (!((String) request.getAttribute("MAIDEN")).equals("")) { %>
+            <% if (!((String) request.getAttribute("MAIDEN")).isEmpty()) { %>
             <p><b>Maiden name:</b> <%= request.getAttribute("MAIDEN") %></p>
             <% } %>
             <br/>
             <jsp:include page="/footer.jsp"/>
         </div>
     </section>
-
 </body>
 </html>
