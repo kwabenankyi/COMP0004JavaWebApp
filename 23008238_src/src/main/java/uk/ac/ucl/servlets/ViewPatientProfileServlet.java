@@ -12,14 +12,13 @@ import java.util.HashMap;
 
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
-import uk.ac.ucl.model.PatientModel;
 
 @WebServlet("/patientProfile.html")
 public class ViewPatientProfileServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PatientModel patientModel = ModelFactory.getPatientModel();
+        Model model = ModelFactory.getModel();
         String patientID = request.getParameter("ID");
-        HashMap<String, String> patientProfile = patientModel.getPatientProfile(patientID);
+        HashMap<String, String> patientProfile = model.getPatientProfile(patientID);
         try {
             for (String key : patientProfile.keySet()) {
                 if ((key.equals("MARITAL"))) {

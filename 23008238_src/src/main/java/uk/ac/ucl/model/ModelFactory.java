@@ -11,14 +11,14 @@ import java.io.IOException;
 
 public class ModelFactory
 {
-  private static PatientModel patientModel;
+  private static Model model;
   private static String filename = "data/patients1000.csv";
-  public static PatientModel getPatientModel() throws IOException
+  public static Model getModel() throws IOException
   {
-    if (patientModel == null)
+    if (model == null)
     {
-      patientModel = new PatientModel(filename);
+      model = new Model(filename);
     }
-    return patientModel;
+    return model;
   }
 }

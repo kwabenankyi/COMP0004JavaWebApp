@@ -2,7 +2,6 @@ package uk.ac.ucl.servlets;
 
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
-import uk.ac.ucl.model.PatientModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -25,8 +24,8 @@ public class SearchServlet extends HttpServlet
   {
     // Use the model to do the search and put the results into the request object sent to the
     // Java Server Page used to display the results.
-    PatientModel patientModel = ModelFactory.getPatientModel();
-    ArrayList<ArrayList<String>> result = patientModel.searchFor(request.getParameter("searchstring"));
+    Model model = ModelFactory.getModel();
+    ArrayList<ArrayList<String>> result = model.searchFor(request.getParameter("searchstring"));
     request.setAttribute("searchstring", request.getParameter("searchstring"));
     request.setAttribute("result", result.getFirst());
     request.setAttribute("resultids", result.getLast());

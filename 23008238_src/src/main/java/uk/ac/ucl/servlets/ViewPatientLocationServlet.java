@@ -2,7 +2,6 @@ package uk.ac.ucl.servlets;
 
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
-import uk.ac.ucl.model.PatientModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -20,13 +19,13 @@ import java.util.Set;
 @WebServlet("/statsLocation.html")
 public class ViewPatientLocationServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PatientModel patientModel = ModelFactory.getPatientModel();
-        patientModel.sort("CITY");
-        HashMap<String,String> idNames = patientModel.getIDsToNames();
-        HashMap<String,String> idAddresses = patientModel.getIDsToAddresses();
-        ArrayList<String> cities = new ArrayList<>(new HashSet<>(patientModel.getCities()));
+        Model model = ModelFactory.getModel();
+        model.sort("CITY");
+        HashMap<String,String> idNames = model.getIDsToNames();
+        HashMap<String,String> idAddresses = model.getIDsToAddresses();
+        ArrayList<String> cities = new ArrayList<>(new HashSet<>(model.getCities()));
         cities.sort(String.CASE_INSENSITIVE_ORDER);
-        request.setAttribute("cityPatients", patientModel.splitPatientsByCity()); //dict
+        request.setAttribute("cityPatients", model.splitPatientsByCity()); //dict
         request.setAttribute("idNames", idNames); //dict
         request.setAttribute("cities", cities);
         request.setAttribute("idAddresses", idAddresses); //dict

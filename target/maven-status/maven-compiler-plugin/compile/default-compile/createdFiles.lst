@@ -8,6 +8,7 @@ uk/ac/ucl/servlets/ViewPatientProfileServlet.class
 uk/ac/ucl/model/ModelFactory.class
 uk/ac/ucl/model/Test.class
 uk/ac/ucl/model/DataFrame.class
+uk/ac/ucl/model/PatientModel.class
 uk/ac/ucl/model/Column.class
 uk/ac/ucl/servlets/ViewPatientListServlet.class
 uk/ac/ucl/servlets/ViewPatientAgesServlet.class

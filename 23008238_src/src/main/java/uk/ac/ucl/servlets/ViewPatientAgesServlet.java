@@ -2,7 +2,6 @@ package uk.ac.ucl.servlets;
 
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
-import uk.ac.ucl.model.PatientModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -19,12 +18,12 @@ import java.util.HashSet;
 @WebServlet("/statsAge.html")
 public class ViewPatientAgesServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PatientModel patientModel = ModelFactory.getPatientModel();
-        patientModel.sort("LAST");
-        HashMap<String,ArrayList<String>> idAges = patientModel.getIDsToAges();
-        HashMap<String,String> idDOB = patientModel.getIDsToDOB();
-        HashMap<String,String> idNames = patientModel.getIDsToNames();
-        ArrayList<String> ageGroups = patientModel.getAgeGroups();
+        Model model = ModelFactory.getModel();
+        model.sort("LAST");
+        HashMap<String,ArrayList<String>> idAges = model.getIDsToAges();
+        HashMap<String,String> idDOB = model.getIDsToDOB();
+        HashMap<String,String> idNames = model.getIDsToNames();
+        ArrayList<String> ageGroups = model.getAgeGroups();
         request.setAttribute("idNames", idNames); //dict
         request.setAttribute("idAges", idAges); //dict
         request.setAttribute("idDOB", idDOB); //dict
