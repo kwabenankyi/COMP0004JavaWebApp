@@ -15,11 +15,11 @@
     <section>
         <jsp:include page="topnav.jsp"/>
         <div class="content">
-            <h1 style="text-align: center">Miscellaneous stats</h1>
+            <h1 style="text-align: center">General stats</h1>
             <div class="overview-boxes">
                 <div class="box">
                     <i class="ic--round-people"></i>
-                    <div class="title">Total patients: </div>
+                    <div class="title">Total patients registered: </div>
                     <div class="number"> <%= request.getAttribute("numPatients") %></div>
                 </div>
                 <div class="box">
@@ -49,6 +49,20 @@
                     <div class="title">Ethnicities represented:</div>
                     <div class="number"><%= request.getAttribute("numEthnicities") %></div>
                 </div>
+            </div>
+            <div class="overview-boxes">
+                <div class="box" style="background: lightblue">
+                    <a href="statsLocation.html">
+                        <i class='bx bx-map-pin'></i>
+                        <div class="box-topic">View stats by location</div>
+                    </a>
+                </div><br/>
+                <div class="box" style="background: lightblue">
+                    <a href="statsAge.html">
+                        <i class='bx bx-calendar-check'></i>
+                        <div class="box-topic">View stats by age</div>
+                    </a>
+                </div><br/>
             </div>
         </div>
         <jsp:include page="footer.jsp"/>

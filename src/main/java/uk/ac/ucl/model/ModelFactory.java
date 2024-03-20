@@ -18,9 +18,6 @@ public class ModelFactory
     if (model == null)
     {
       model = new Model(filename);
-      // Note where the data file is stored in the data directory,
-      // and the pathname to locate it.
-      // The data should be read the file once, not every time the model is accessed!
     }
     return model;
   }

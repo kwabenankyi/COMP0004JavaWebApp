@@ -16,7 +16,7 @@
           </a>
         </div>
         <div class="box">
-          <a href="statsIndex.jsp">
+          <a href="statsMisc.html">
             <i class='bx bx-stats'></i>
             <div class="box-topic">View stats</div>
           </a>

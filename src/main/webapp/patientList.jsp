@@ -1,4 +1,5 @@
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -13,18 +14,15 @@
         <h1 style="text-align: center">All patients</h1>
         <div class="overview-boxes">
             <%
-              int count = 0;
-              List<String> patients = (List<String>) request.getAttribute("patientNames");
-              List<String> IDs = (List<String>) request.getAttribute("patientIDs");
-              for (String patient : patients)
+              HashMap<String,String> idNames = (HashMap<String, String>) request.getAttribute("idNames");
+              for (String id : idNames.keySet())
               {
-                String href = "patientProfile.html?ID=" + IDs.get(count);
-                count++;
+                String href = "patientProfile.html?ID=" + id;
             %>
             <div class="box">
               <a href="<%=href%>">
                 <i class='gg--profile'></i>
-                <div class="title"><%=patient%></div>
+                <div class="title"><%=idNames.get(id)%></div>
               </a>
             </div>
             <% } %>
